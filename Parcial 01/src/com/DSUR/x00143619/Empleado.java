@@ -35,15 +35,15 @@ abstract class Empleado {
     public void removeDocumento(String documento) {
         boolean remove = false;
         for (Documento s : Documentos) {
-            if (s.getNombre() == Nombre) {
+            if (s.getNombre().equals(documento)) {
                 remove = true;
             }
         }
         if (!remove)
-            System.out.println("No existe ese Nombre dentro de lista");
+            System.out.println("No existe ese documento dentro de lista");
         else
-            System.out.println("Documento de" + Nombre + "ha sido eliminado");
-        Documentos.removeIf(n -> (n.getNombre() == Nombre));
+            System.out.println("Documento de" + documento+ "ha sido eliminado");
+        Documentos.removeIf(n -> (n.getNombre().equals(documento)));
     }
 
      public double getSalario() {

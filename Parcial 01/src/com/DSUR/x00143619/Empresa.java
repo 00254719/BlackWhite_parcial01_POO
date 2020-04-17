@@ -22,7 +22,7 @@ public class Empresa {
     public void quitEmpleado(String nombre){
         boolean remove=false;
         for (Empleado s : planilla) {
-            if (s.getNombre()==nombre) {
+            if (s.getNombre().equals(nombre)) {
                 remove=true;
             }
         }
@@ -30,6 +30,6 @@ public class Empresa {
             System.out.println("No existe el empleado!");
         else
             System.out.println("Empleado "+nombre+"eliminado!");
-        planilla.removeIf(n -> (n.getNombre()==nombre));
+        planilla.removeIf(n -> (n.getNombre().equals(nombre)));
     }
 }
