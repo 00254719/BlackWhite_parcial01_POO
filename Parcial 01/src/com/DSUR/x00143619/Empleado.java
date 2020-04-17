@@ -1,5 +1,4 @@
 package com.DSUR.x00143619;
-
 import java.util.ArrayList;
 
 
@@ -37,11 +36,11 @@ abstract class Empleado {
         Documentos.remove(documento);
      }
 
-    public double getSalario() {
+     public double getSalario() {
         return Salario;
     }
 
-    public void setSalario(double salario) {
+     public void setSalario(double salario) {
        Salario = salario;
     }
 }
