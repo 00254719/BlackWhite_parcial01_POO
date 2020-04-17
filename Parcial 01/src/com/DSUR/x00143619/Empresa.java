@@ -27,7 +27,7 @@ public class Empresa {
             }
         }
         if(!remove)
-            System.out.println("No existe ese Id dentro de los Items!");
+            System.out.println("No existe el empleado!");
         else
             System.out.println("Empleado "+nombre+"eliminado!");
         planilla.removeIf(n -> (n.getNombre()==nombre));
