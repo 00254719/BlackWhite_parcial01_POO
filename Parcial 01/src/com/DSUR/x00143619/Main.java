@@ -23,30 +23,30 @@ public class Main {
                 "2) Plaza fija.\n"+
                 "  Opcion: ";
 
-       boolean continuar2=false;
+       boolean continuar1=false;
+        String NombreEmpresa = "";
         do {
             try {
-                continuar2 = false;
-
+                continuar1 = false;
                 System.out.print("Digite el nombre de su empresa: ");
-                String NombreEmpresa = in.nextLine();
+                 NombreEmpresa = in.nextLine();
                 if(verificacion(NombreEmpresa))
                     throw new NullArgument("Ingreso datos invalidos !!!");
                 else if (verificacionNumero(NombreEmpresa))
                     throw new NumberFormatException("Los nombres no llevan numeros");
                 else if(verificacionFormato(NombreEmpresa))
                     throw new InvalidStringFormat("Nombre demasiado corto");
+                Empresa empresa = new Empresa(NombreEmpresa);
 
             }catch (NullArgument | InvalidStringFormat ex) {
-                System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
-                continuar2=true;
+                System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
+                continuar1=true;
             }catch (NumberFormatException ex){
-                System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
-                continuar2=true;
+                System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
+                continuar1=true;
             }
-        }while(continuar2);
+        }while(continuar1);
         Empresa empresa = new Empresa(NombreEmpresa);
-
         do {
             System.out.print(menu);
             opcion = in.nextByte(); in.nextLine();
@@ -70,11 +70,11 @@ public class Main {
 
                         System.out.print("Dijite el puesto del empleado: ");
                         String puesto = in.nextLine();
-                            if(verificacion(nombre))
+                            if(verificacion(puesto))
                                 throw new NullArgument("Ingreso datos invalidos !!!");
-                            else if (verificacionNumero(nombre))
+                            else if (verificacionNumero(puesto))
                                 throw new NumberFormatException("Los nombres no llevan numeros");
-                            else if(verificacionFormato(nombre))
+                            else if(verificacionFormato(puesto))
                                 throw new InvalidStringFormat("Nombre demasiado corto");
 
                         System.out.print("Salario: ");
@@ -101,10 +101,10 @@ public class Main {
                                 break;
                         }
                         }catch (NullArgument | InvalidStringFormat ex) {
-                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
                             continuar=true;
                         }catch (NumberFormatException ex){
-                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
                             continuar=true;
                         }
                     }while (continuar);
@@ -154,26 +154,53 @@ public class Main {
 
                 default:
                     System.out.println("Esta opcion no es valida !!!");
-                    break;
             }
         } while (opcion!=0);
 
 }
+
    public static void agregarDocumentos(Empleado empleado){
+       boolean continuar3 = false;
        System.out.print("Numero de documentos a registar: ");int documentos=in.nextInt(); in.nextLine();
-       for(int i=0;i<documentos;i++){
-           System.out.print("Nombre del docuemento a agregar: "); String nombredoc= in.nextLine();
-           System.out.print("Numero del docuemento a agregar: "); String doc=in.nextLine();
-           empleado.addDocumento(new Documento(nombredoc,doc));
+       for(int i=0;i<documentos;i++) {
+           do {
+               try {
+                   continuar3 = false;
+                   System.out.print("Nombre del docuemento a agregar: ");
+                   String nombredoc = in.nextLine();
+                   if (verificacion(nombredoc))
+                       throw new NullArgument("Ingreso datos invalidos !!!");
+                   else if (verificacionFormato(nombredoc))
+                       throw new InvalidStringFormat("Nombre demasiado corto");
+                   else if (verificacionNumero(nombredoc))
+                       throw new NumberFormatException("Los nombres no llevan numeros");
+                   System.out.print("Numero del docuemento a agregar: ");
+                   String doc = in.nextLine();
+                   if (verificacion(doc))
+                       throw new NullArgument("Ingreso datos invalidos !!!");
+                   else if (verificacionFormato(doc))
+                       throw new InvalidStringFormat("Formato demasiado corto");
+                   empleado.addDocumento(new Documento(nombredoc, doc));
+               } catch (NullArgument | InvalidStringFormat ex) {
+                   System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                   continuar3 = true;
+               }catch (NumberFormatException ex) {
+                   System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                   continuar3 = true;
+               }
+           }while(continuar3);
        }
-   }
+    }
+
 
    public static boolean verificacion(String verificar){
         if(verificar.length()==0||verificar==null)
        return true;
                 return false;
    }
+
    public static boolean verificacionNumero(String VerNum){
+        //"-?\\d+(\\.\\d+)?" formato para verificar que un string no lleve numeros
         if (VerNum.matches("-?\\d+(\\.\\d+)?"))
            return true;
        return false;
@@ -184,6 +211,7 @@ public class Main {
            return true;
        return false;
    }
+
 }
 
 
