@@ -25,6 +25,7 @@ public class Main {
 
        boolean continuar1=false;
         String NombreEmpresa = "";
+        String nombre2= "";
         do {
             try {
                 continuar1 = false;
@@ -58,20 +59,20 @@ public class Main {
                     do {
                         try {
                             continuar=false;
-                        System.out.print("Dijite el nombre del empleado: ");
+                        System.out.print("Digite el nombre del empleado: ");
                         String nombre = in.nextLine();
                         verificacion(nombre);
                         if(verificacion(nombre))
-                            throw new NullArgument("Ingreso datos invalidos !!!");
+                            throw new NullArgument("Ingreso datos invalidos ");
                         else if (verificacionNumero(nombre))
                             throw new NumberFormatException("Los nombres no llevan numeros");
                             else if(verificacionFormato(nombre))
                                 throw new InvalidStringFormat("Nombre demasiado corto");
 
-                        System.out.print("Dijite el puesto del empleado: ");
+                        System.out.print("Digite el puesto del empleado: ");
                         String puesto = in.nextLine();
                             if(verificacion(puesto))
-                                throw new NullArgument("Ingreso datos invalidos !!!");
+                                throw new NullArgument("Ingreso datos invalidos ");
                             else if (verificacionNumero(puesto))
                                 throw new NumberFormatException("Los nombres no llevan numeros");
                             else if(verificacionFormato(puesto))
@@ -111,12 +112,30 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.print("Digite el nombre del empleado a despedir: ");   String nombre1= in.nextLine();
+                    boolean continuar4= false;
+                    do {
+                        try {
+                            continuar4=false;
+                    System.out.print("Digite el nombre del empleado a despedir: ");
+                    String nombre1= in.nextLine();
+                            if(verificacion(nombre1))
+                                throw new NullArgument("Ingreso datos invalidos ");
+                            else if (verificacionNumero(nombre1))
+                                throw new NumberFormatException("Los nombres no llevan numeros");
                     empresa.quitEmpleado(nombre1);
+                        }catch (NullArgument ex) {
+                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
+                            continuar4=true;
+                        }catch (NumberFormatException ex){
+                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
+                            continuar4=true;
+                        }
+                    }while (continuar4);
                     break;
                 case 3:
                     String Lista="";
                     System.out.println("---LISTA DE EMPLEADOS---");
+                    System.out.println("Empresa: "+ empresa.getNombre ());
                     if (empresa.getPlanilla().isEmpty())
                         System.out.println("No hay Empleados ");
 
@@ -126,11 +145,31 @@ public class Main {
                         }
                         System.out.println(Lista);
                     }
+
                     break;
 
                 case 4:
+                    boolean continuar5= false;
+                    do {
+                        try {
+                            continuar5=false;
                     System.out.print("Digite el nombre del empleado que desea consultar su salirio liquido: ");
-                    String nombre2= in.nextLine();
+                    nombre2 = in.nextLine();
+                            if(verificacion(nombre2))
+                                throw new NullArgument("Ingreso datos invalidos ");
+                            else if (verificacionNumero(nombre2))
+                                throw new NumberFormatException("Los nombres no llevan numeros");
+
+
+                        }catch (NullArgument ex) {
+                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
+                            continuar5=true;
+                        }catch (NumberFormatException ex){
+                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
+                            continuar5=true;
+                        }
+                    }while(continuar5);
+
                     boolean found=false;
                     double salarioliquido=0;
                     for (Empleado s : empresa.getPlanilla()) {
@@ -143,7 +182,9 @@ public class Main {
                         System.out.println("No existe el empleado!");
                     else
                         System.out.println("Salario : "+salarioliquido);
+
                     break;
+
                 case 5:
                     System.out.println("total de impuestos: "+'\n'+CalculadoraImpuestos.mostrarTotales());
                     break;
@@ -153,7 +194,7 @@ public class Main {
                     break;
 
                 default:
-                    System.out.println("Esta opcion no es valida !!!");
+                    System.out.println("Esta opcion no es valida ");
             }
         } while (opcion!=0);
 
@@ -169,7 +210,7 @@ public class Main {
                    System.out.print("Nombre del docuemento a agregar: ");
                    String nombredoc = in.nextLine();
                    if (verificacion(nombredoc))
-                       throw new NullArgument("Ingreso datos invalidos !!!");
+                       throw new NullArgument("Ingreso datos invalidos ");
                    else if (verificacionFormato(nombredoc))
                        throw new InvalidStringFormat("Nombre demasiado corto");
                    else if (verificacionNumero(nombredoc))
@@ -177,15 +218,15 @@ public class Main {
                    System.out.print("Numero del docuemento a agregar: ");
                    String doc = in.nextLine();
                    if (verificacion(doc))
-                       throw new NullArgument("Ingreso datos invalidos !!!");
+                       throw new NullArgument("Ingreso datos invalidos ");
                    else if (verificacionFormato(doc))
                        throw new InvalidStringFormat("Formato demasiado corto");
                    empleado.addDocumento(new Documento(nombredoc, doc));
                } catch (NullArgument | InvalidStringFormat ex) {
-                   System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                   System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo...");
                    continuar3 = true;
                }catch (NumberFormatException ex) {
-                   System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                   System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo...");
                    continuar3 = true;
                }
            }while(continuar3);
@@ -210,6 +251,12 @@ public class Main {
        if (VerFor.length()<=2 && VerFor.length()>0)
            return true;
        return false;
+   }
+
+   public static boolean verificarSueldo(double VerSuel){
+        if(VerSuel<=0)
+            return true;
+        return false;
    }
 
 }
