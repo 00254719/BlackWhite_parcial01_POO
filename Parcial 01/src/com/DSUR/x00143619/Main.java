@@ -43,14 +43,14 @@ public class Main {
                             System.out.print("Meses de contrato: ");  int contrato=in.nextInt(); in.nextLine();
                             ServicioProfesional empleado= new ServicioProfesional(nombre,puesto,salario,contrato);
                             empresa.addEmpleado(empleado);
-                            agregarDocumuentos(empleado);
+                            agregarDocumentos(empleado);
 
                             break;
                         case 2:
                             System.out.print("Extencion: ");  int extencion=in.nextInt(); in.nextLine();
                             PlazaFija empleado2= new PlazaFija(nombre,puesto,salario,extencion);
                             empresa.addEmpleado(empleado2);
-                            agregarDocumuentos(empleado2);
+                            agregarDocumentos(empleado2);
                             break;
                     } break;
 
@@ -58,6 +58,20 @@ public class Main {
                     System.out.print("Digite el nombre del empleado a despedir: ");   String nombre1= in.nextLine();
                     empresa.quitEmpleado(nombre1);
                     break;
+                case 3:
+                    String Lista="";
+                    System.out.println("---LISTA DE EMPLEADOS---");
+                    if (empresa.getPlanilla().isEmpty())
+                        System.out.println("No hay Empleados ");
+
+                    else {
+                        for (Empleado p :empresa.getPlanilla()) {
+                            Lista += p.toString() + "\n";
+                        }
+                        System.out.println(Lista);
+                    }
+                    break;
+
                 case 4:
                     System.out.print("Digite el nombre del empleado que desea consultar su salirio liquido: ");
                     String nombre2= in.nextLine();
@@ -80,7 +94,7 @@ public class Main {
         while (opcion!=0);
 
 }
-   public static void agregarDocumuentos(Empleado empleado){
+   public static void agregarDocumentos(Empleado empleado){
        System.out.print("Numero de documentos a registar: ");int documentos=in.nextInt(); in.nextLine();
        for(int i=0;i<documentos;i++){
            System.out.print("Nombre del docuemento a agregar: "); String nombredoc= in.nextLine();

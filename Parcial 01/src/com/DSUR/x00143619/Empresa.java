@@ -29,7 +29,7 @@ public class Empresa {
         if(!remove)
             System.out.println("No existe el empleado!");
         else
-            System.out.println("Empleado "+nombre+"eliminado!");
+            System.out.println("Empleado "+nombre+" despedido!");
         planilla.removeIf(n -> (n.getNombre().equals(nombre)));
     }
 }

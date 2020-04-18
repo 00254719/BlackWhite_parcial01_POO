@@ -15,5 +15,16 @@ public class PlazaFija extends Empleado {
     public void setExtension(int extension) {
         Extension = extension;
     }
+
+    @Override
+    public String toString() {
+        return "PlazaFija{" +
+                "Nombre='" + Nombre + '\'' +
+                ",Extension=" + Extension +'\''+
+                ", Puesto='" + Puesto + '\'' +
+                ", Documentos=" + Documentos +
+                ", Salario=" + Salario +
+                '}';
+    }
 }
 

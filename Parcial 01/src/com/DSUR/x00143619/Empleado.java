@@ -42,7 +42,7 @@ abstract class Empleado {
         if (!remove)
             System.out.println("No existe ese documento dentro de lista");
         else
-            System.out.println("Documento de" + documento+ " ha sido eliminado");
+            System.out.println("Documento de " + documento+ " ha sido eliminado");
         Documentos.removeIf(n -> (n.getNombre().equals(documento)));
     }
 
@@ -53,8 +53,5 @@ abstract class Empleado {
      public void setSalario(double salario) {
        Salario = salario;
     }
-
-
-
 
 }
