@@ -89,7 +89,7 @@ public class Main {
                         System.out.println("Salario : "+salarioliquido);
                     break;
                 case 5:
-                    System.out.println("total de impuestos: "+CalculadoraImpuestos.mostrarTotales());
+                    System.out.println("total de impuestos: "+'\n'+CalculadoraImpuestos.mostrarTotales());
             }
 
         }
