@@ -88,6 +88,8 @@ public class Main {
                     else
                         System.out.println("Salario : "+salarioliquido);
                     break;
+                case 5:
+                    System.out.println("total de impuestos: "+CalculadoraImpuestos.mostrarTotales());
             }
 
         }
