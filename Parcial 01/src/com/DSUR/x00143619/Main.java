@@ -23,8 +23,28 @@ public class Main {
                 "2) Plaza fija.\n"+
                 "  Opcion: ";
 
-        System.out.print("Digite el nombre de su empresa: ");
-        String NombreEmpresa= in.nextLine();
+       boolean continuar2=false;
+        do {
+            try {
+                continuar2 = false;
+
+                System.out.print("Digite el nombre de su empresa: ");
+                String NombreEmpresa = in.nextLine();
+                if(verificacion(NombreEmpresa))
+                    throw new NullArgument("Ingreso datos invalidos !!!");
+                else if (verificacionNumero(NombreEmpresa))
+                    throw new NumberFormatException("Los nombres no llevan numeros");
+                else if(verificacionFormato(NombreEmpresa))
+                    throw new InvalidStringFormat("Nombre demasiado corto");
+
+            }catch (NullArgument | InvalidStringFormat ex) {
+                System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                continuar2=true;
+            }catch (NumberFormatException ex){
+                System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                continuar2=true;
+            }
+        }while(continuar2);
         Empresa empresa = new Empresa(NombreEmpresa);
 
         do {
@@ -34,25 +54,61 @@ public class Main {
             switch (opcion){
 
                 case 1:
-                    System.out.print("Dijite el nombre del empleado: ");   String nombre= in.nextLine();
-                    System.out.print("Dijite el puesto del empleado: ");  String puesto=in.nextLine();
-                    System.out.print("Salario: "); double salario= in.nextDouble(); in.nextLine();
-                    System.out.print(submenu); opcion2 = in.nextByte(); in.nextLine();
-                    switch (opcion2){
-                        case 1:
-                            System.out.print("Meses de contrato: ");  int contrato=in.nextInt(); in.nextLine();
-                            ServicioProfesional empleado= new ServicioProfesional(nombre,puesto,salario,contrato);
-                            empresa.addEmpleado(empleado);
-                            agregarDocumentos(empleado);
+                    boolean continuar= false;
+                    do {
+                        try {
+                            continuar=false;
+                        System.out.print("Dijite el nombre del empleado: ");
+                        String nombre = in.nextLine();
+                        verificacion(nombre);
+                        if(verificacion(nombre))
+                            throw new NullArgument("Ingreso datos invalidos !!!");
+                        else if (verificacionNumero(nombre))
+                            throw new NumberFormatException("Los nombres no llevan numeros");
+                            else if(verificacionFormato(nombre))
+                                throw new InvalidStringFormat("Nombre demasiado corto");
 
-                            break;
-                        case 2:
-                            System.out.print("Extencion: ");  int extencion=in.nextInt(); in.nextLine();
-                            PlazaFija empleado2= new PlazaFija(nombre,puesto,salario,extencion);
-                            empresa.addEmpleado(empleado2);
-                            agregarDocumentos(empleado2);
-                            break;
-                    } break;
+                        System.out.print("Dijite el puesto del empleado: ");
+                        String puesto = in.nextLine();
+                            if(verificacion(nombre))
+                                throw new NullArgument("Ingreso datos invalidos !!!");
+                            else if (verificacionNumero(nombre))
+                                throw new NumberFormatException("Los nombres no llevan numeros");
+                            else if(verificacionFormato(nombre))
+                                throw new InvalidStringFormat("Nombre demasiado corto");
+
+                        System.out.print("Salario: ");
+                        double salario = in.nextDouble();in.nextLine();
+
+                        System.out.print(submenu);
+                        opcion2 = in.nextByte();in.nextLine();
+
+                        switch (opcion2) {
+                            case 1:
+                                System.out.print("Meses de contrato: ");
+                                int contrato = in.nextInt();in.nextLine();
+                                ServicioProfesional empleado = new ServicioProfesional(nombre, puesto, salario, contrato);
+                                empresa.addEmpleado(empleado);
+                                agregarDocumentos(empleado);
+                                break;
+
+                            case 2:
+                                System.out.print("Extencion: ");
+                                int extencion = in.nextInt();in.nextLine();
+                                PlazaFija empleado2 = new PlazaFija(nombre, puesto, salario, extencion);
+                                empresa.addEmpleado(empleado2);
+                                agregarDocumentos(empleado2);
+                                break;
+                        }
+                        }catch (NullArgument | InvalidStringFormat ex) {
+                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                            continuar=true;
+                        }catch (NumberFormatException ex){
+                            System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo !!!...");
+                            continuar=true;
+                        }
+                    }while (continuar);
+                    break;
 
                 case 2:
                     System.out.print("Digite el nombre del empleado a despedir: ");   String nombre1= in.nextLine();
@@ -90,10 +146,17 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("total de impuestos: "+'\n'+CalculadoraImpuestos.mostrarTotales());
-            }
+                    break;
 
-        }
-        while (opcion!=0);
+                case 0:
+                    System.out.println("Adios");
+                    break;
+
+                default:
+                    System.out.println("Esta opcion no es valida !!!");
+                    break;
+            }
+        } while (opcion!=0);
 
 }
    public static void agregarDocumentos(Empleado empleado){
@@ -104,5 +167,24 @@ public class Main {
            empleado.addDocumento(new Documento(nombredoc,doc));
        }
    }
+
+   public static boolean verificacion(String verificar){
+        if(verificar.length()==0||verificar==null)
+       return true;
+                return false;
+   }
+   public static boolean verificacionNumero(String VerNum){
+        if (VerNum.matches("-?\\d+(\\.\\d+)?"))
+           return true;
+       return false;
+   }
+
+   public static boolean verificacionFormato(String VerFor){
+       if (VerFor.length()<=2 && VerFor.length()>0)
+           return true;
+       return false;
+   }
 }
+
+
 
