@@ -33,7 +33,6 @@ private static double totalAFP=0;
         return salarioliquido;
     }
 
-
     public static String mostrarTotales(){
         return "Total de Renta: $"+totalRenta+'\n'+"Total de ISSS: $"+totalISSS+'\n'+"Total de AFP: $"+totalAFP+'\n';
     }
