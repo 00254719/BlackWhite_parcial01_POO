@@ -1,5 +1,5 @@
 package com.DSUR.x00143619;
-import java.util.ArrayList;
+import  java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -36,10 +36,9 @@ public class Main {
                 else if (verificacionNumero(NombreEmpresa))
                     throw new NumberFormatException("Los nombres no llevan numeros");
                 else if(verificacionFormato(NombreEmpresa))
-                    throw new InvalidStringFormat("Nombre demasiado corto");
-                Empresa empresa = new Empresa(NombreEmpresa);
+                    throw new InvalidStringFormatException("Nombre demasiado corto");
 
-            }catch (NullArgument | InvalidStringFormat ex) {
+            }catch (NullArgument | InvalidStringFormatException ex) {
                 System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
                 continuar1=true;
             }catch (NumberFormatException ex){
@@ -48,66 +47,89 @@ public class Main {
             }
         }while(continuar1);
         Empresa empresa = new Empresa(NombreEmpresa);
-        do {
-            System.out.print(menu);
-            opcion = in.nextByte(); in.nextLine();
 
-            switch (opcion){
+        do {
+            boolean continuar6=false;
+            do {
+                try {
+                    continuar6=false;
+                    System.out.print(menu);
+                    opcion = in.nextByte();
+                    in.nextLine();
+                } catch (InputMismatchException ex) {
+                    in.nextLine();
+                    System.out.println("Digite un formato valido!" + "\n Por favor vuelva a intentarlo ...");
+                    continuar6 = true;
+                }
+            }while(continuar6);
+
+
+        switch (opcion){
 
                 case 1:
                     boolean continuar= false;
                     do {
                         try {
-                            continuar=false;
-                        System.out.print("Digite el nombre del empleado: ");
-                        String nombre = in.nextLine();
-                        verificacion(nombre);
-                        if(verificacion(nombre))
-                            throw new NullArgument("Ingreso datos invalidos ");
-                        else if (verificacionNumero(nombre))
-                            throw new NumberFormatException("Los nombres no llevan numeros");
-                            else if(verificacionFormato(nombre))
-                                throw new InvalidStringFormat("Nombre demasiado corto");
-
-                        System.out.print("Digite el puesto del empleado: ");
-                        String puesto = in.nextLine();
-                            if(verificacion(puesto))
+                            continuar = false;
+                            System.out.print("Digite el nombre del empleado: ");
+                            String nombre = in.nextLine();
+                            verificacion(nombre);
+                            if (verificacion(nombre))
+                                throw new NullArgument("Ingreso datos invalidos ");
+                            else if (verificacionNumero(nombre))
+                                throw new NumberFormatException("Los nombres no llevan numeros");
+                            else if (verificacionFormato(nombre))
+                                throw new InvalidStringFormatException("Nombre demasiado corto");
+                            System.out.print("Digite el puesto del empleado: ");
+                            String puesto = in.nextLine();
+                            if (verificacion(puesto))
                                 throw new NullArgument("Ingreso datos invalidos ");
                             else if (verificacionNumero(puesto))
                                 throw new NumberFormatException("Los nombres no llevan numeros");
-                            else if(verificacionFormato(puesto))
-                                throw new InvalidStringFormat("Nombre demasiado corto");
+                            else if (verificacionFormato(puesto))
+                                throw new InvalidStringFormatException("Nombre demasiado corto");
 
-                        System.out.print("Salario: ");
-                        double salario = in.nextDouble();in.nextLine();
+                            System.out.print("Salario: ");
+                            double salario = in.nextDouble();
+                            in.nextLine();
+                            InvalidIntException.ValidateInt(salario);
+                            System.out.print(submenu);
+                            opcion2 = in.nextByte();
+                            in.nextLine();
 
-                        System.out.print(submenu);
-                        opcion2 = in.nextByte();in.nextLine();
+                            switch (opcion2) {
+                                case 1:
+                                    System.out.print("Meses de contrato: ");
+                                    int contrato = in.nextInt();in.nextLine();
+                                    InvalidIntException.ValidateInt(contrato);
+                                    ServicioProfesional empleado = new ServicioProfesional(nombre, puesto,
+                                            salario, contrato);
+                                    empresa.addEmpleado(empleado);
+                                    agregarDocumentos(empleado);
+                                    break;
 
-                        switch (opcion2) {
-                            case 1:
-                                System.out.print("Meses de contrato: ");
-                                int contrato = in.nextInt();in.nextLine();
-                                ServicioProfesional empleado = new ServicioProfesional(nombre, puesto, salario, contrato);
-                                empresa.addEmpleado(empleado);
-                                agregarDocumentos(empleado);
-                                break;
+                                case 2:
+                                    System.out.print("Extencion: ");
+                                    int extencion = in.nextInt();
+                                    in.nextLine();
+                                    PlazaFija empleado2 = new PlazaFija(nombre, puesto, salario, extencion);
+                                    empresa.addEmpleado(empleado2);
+                                    agregarDocumentos(empleado2);
+                                    break;
+                            }
 
-                            case 2:
-                                System.out.print("Extencion: ");
-                                int extencion = in.nextInt();in.nextLine();
-                                PlazaFija empleado2 = new PlazaFija(nombre, puesto, salario, extencion);
-                                empresa.addEmpleado(empleado2);
-                                agregarDocumentos(empleado2);
-                                break;
-                        }
-                        }catch (NullArgument | InvalidStringFormat ex) {
+                        }catch (NullArgument | InvalidStringFormatException ex) {
                             System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
                             continuar=true;
-                        }catch (NumberFormatException ex){
+                        }catch (NumberFormatException|ArithmeticException ex){
                             System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
                             continuar=true;
+                        }catch(InputMismatchException ex){
+                            in.nextLine();
+                            System.out.println("Digite un formato valido!"+ "\n Por favor vuelva a intentarlo ...");
+                            continuar=true;
                         }
+
                     }while (continuar);
                     break;
 
@@ -212,7 +234,7 @@ public class Main {
                    if (verificacion(nombredoc))
                        throw new NullArgument("Ingreso datos invalidos ");
                    else if (verificacionFormato(nombredoc))
-                       throw new InvalidStringFormat("Nombre demasiado corto");
+                       throw new InvalidStringFormatException("Nombre demasiado corto");
                    else if (verificacionNumero(nombredoc))
                        throw new NumberFormatException("Los nombres no llevan numeros");
                    System.out.print("Numero del docuemento a agregar: ");
@@ -220,9 +242,9 @@ public class Main {
                    if (verificacion(doc))
                        throw new NullArgument("Ingreso datos invalidos ");
                    else if (verificacionFormato(doc))
-                       throw new InvalidStringFormat("Formato demasiado corto");
+                       throw new InvalidStringFormatException("Formato demasiado corto");
                    empleado.addDocumento(new Documento(nombredoc, doc));
-               } catch (NullArgument | InvalidStringFormat ex) {
+               } catch (NullArgument | InvalidStringFormatException ex) {
                    System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo...");
                    continuar3 = true;
                }catch (NumberFormatException ex) {
@@ -235,15 +257,18 @@ public class Main {
 
 
    public static boolean verificacion(String verificar){
-        if(verificar.length()==0||verificar==null)
+
+        if(verificar.length()==0||verificar==null|| verificar.replaceAll("\\s+","").length()==0)
        return true;
                 return false;
    }
 
    public static boolean verificacionNumero(String VerNum){
-        //"-?\\d+(\\.\\d+)?" formato para verificar que un string no lleve numeros
-        if (VerNum.matches("-?\\d+(\\.\\d+)?"))
-           return true;
+           char[] letras = VerNum.toCharArray();
+           for(char v : letras){
+               if(Character.isDigit(v))
+                   return true;
+       }
        return false;
    }
 
