@@ -32,13 +32,13 @@ public class Main {
                 System.out.print("Digite el nombre de su empresa: ");
                  NombreEmpresa = in.nextLine();
                 if(verificacion(NombreEmpresa))
-                    throw new NullArgument("Ingreso datos invalidos !!!");
+                    throw new NullArgumentException("Ingreso datos invalidos !!!");
                 else if (verificacionNumero(NombreEmpresa))
                     throw new NumberFormatException("Los nombres no llevan numeros");
                 else if(verificacionFormato(NombreEmpresa))
                     throw new InvalidStringFormatException("Nombre demasiado corto");
 
-            }catch (NullArgument | InvalidStringFormatException ex) {
+            }catch (NullArgumentException | InvalidStringFormatException ex) {
                 System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
                 continuar1=true;
             }catch (NumberFormatException ex){
@@ -75,7 +75,7 @@ public class Main {
                             String nombre = in.nextLine();
                             verificacion(nombre);
                             if (verificacion(nombre))
-                                throw new NullArgument("Ingreso datos invalidos ");
+                                throw new NullArgumentException("Ingreso datos invalidos ");
                             else if (verificacionNumero(nombre))
                                 throw new NumberFormatException("Los nombres no llevan numeros");
                             else if (verificacionFormato(nombre))
@@ -83,7 +83,7 @@ public class Main {
                             System.out.print("Digite el puesto del empleado: ");
                             String puesto = in.nextLine();
                             if (verificacion(puesto))
-                                throw new NullArgument("Ingreso datos invalidos ");
+                                throw new NullArgumentException("Ingreso datos invalidos ");
                             else if (verificacionNumero(puesto))
                                 throw new NumberFormatException("Los nombres no llevan numeros");
                             else if (verificacionFormato(puesto))
@@ -118,7 +118,7 @@ public class Main {
                                     break;
                             }
 
-                        }catch (NullArgument | InvalidStringFormatException ex) {
+                        }catch (NullArgumentException | InvalidStringFormatException ex) {
                             System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
                             continuar=true;
                         }catch (NumberFormatException|ArithmeticException ex){
@@ -141,11 +141,11 @@ public class Main {
                     System.out.print("Digite el nombre del empleado a despedir: ");
                     String nombre1= in.nextLine();
                             if(verificacion(nombre1))
-                                throw new NullArgument("Ingreso datos invalidos ");
+                                throw new NullArgumentException("Ingreso datos invalidos ");
                             else if (verificacionNumero(nombre1))
                                 throw new NumberFormatException("Los nombres no llevan numeros");
                     empresa.quitEmpleado(nombre1);
-                        }catch (NullArgument ex) {
+                        }catch (NullArgumentException ex) {
                             System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
                             continuar4=true;
                         }catch (NumberFormatException ex){
@@ -178,12 +178,12 @@ public class Main {
                     System.out.print("Digite el nombre del empleado que desea consultar su salirio liquido: ");
                     nombre2 = in.nextLine();
                             if(verificacion(nombre2))
-                                throw new NullArgument("Ingreso datos invalidos ");
+                                throw new NullArgumentException("Ingreso datos invalidos ");
                             else if (verificacionNumero(nombre2))
                                 throw new NumberFormatException("Los nombres no llevan numeros");
 
 
-                        }catch (NullArgument ex) {
+                        }catch (NullArgumentException ex) {
                             System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ...");
                             continuar5=true;
                         }catch (NumberFormatException ex){
@@ -232,7 +232,7 @@ public class Main {
                    System.out.print("Nombre del docuemento a agregar: ");
                    String nombredoc = in.nextLine();
                    if (verificacion(nombredoc))
-                       throw new NullArgument("Ingreso datos invalidos ");
+                       throw new NullArgumentException("Ingreso datos invalidos ");
                    else if (verificacionFormato(nombredoc))
                        throw new InvalidStringFormatException("Nombre demasiado corto");
                    else if (verificacionNumero(nombredoc))
@@ -240,11 +240,11 @@ public class Main {
                    System.out.print("Numero del docuemento a agregar: ");
                    String doc = in.nextLine();
                    if (verificacion(doc))
-                       throw new NullArgument("Ingreso datos invalidos ");
+                       throw new NullArgumentException("Ingreso datos invalidos ");
                    else if (verificacionFormato(doc))
                        throw new InvalidStringFormatException("Formato demasiado corto");
                    empleado.addDocumento(new Documento(nombredoc, doc));
-               } catch (NullArgument | InvalidStringFormatException ex) {
+               } catch (NullArgumentException | InvalidStringFormatException ex) {
                    System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo...");
                    continuar3 = true;
                }catch (NumberFormatException ex) {
