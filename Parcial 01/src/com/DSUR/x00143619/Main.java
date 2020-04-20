@@ -105,7 +105,8 @@ public class Main {
                                     System.out.print("Meses de contrato: ");
                                     int contrato = in.nextInt();in.nextLine();
                                     InvalidIntException.ValidateInt(contrato);
-                                    ServicioProfesional empleado = new ServicioProfesional(nombre, puesto,
+                                    //.toLowerCase para no tener problemas al verificar
+                                    ServicioProfesional empleado = new ServicioProfesional(nombre.toLowerCase(), puesto,
                                             salario, contrato);
                                     empresa.addEmpleado(empleado);
                                     agregarDocumentos(empleado);
@@ -147,13 +148,13 @@ public class Main {
                     do {
                         try {
                             continuar3=false;
-                    System.out.print("Digite el nombre del empleado a despedir: ");
-                    String nombre1= in.nextLine();
+                            System.out.print("Digite el nombre del empleado a despedir: ");
+                            String nombre1= in.nextLine();
                             if(verificacion(nombre1))
                                 throw new NullArgumentException("Ingreso datos invalidos ");
                             else if (verificacionNumero(nombre1))
                                 throw new NumberFormatException("Los nombres no llevan numeros");
-                    empresa.quitEmpleado(nombre1);
+                            empresa.quitEmpleado(nombre1.toLowerCase());
                         }catch (NullArgumentException ex) {
                             System.out.println(ex.getMessage() + "\n Por favor vuelva a intentarlo ..."+"\n");
                             continuar3=true;
@@ -184,8 +185,8 @@ public class Main {
                     do {
                         try {
                             continuar4=false;
-                    System.out.print("Digite el nombre del empleado que desea consultar su salirio liquido: ");
-                    nombre2 = in.nextLine();
+                            System.out.print("Digite el nombre del empleado que desea consultar su salirio liquido: ");
+                            nombre2 = in.nextLine();
                             if(verificacion(nombre2))
                                 throw new NullArgumentException("Ingreso datos invalidos ");
                             else if (verificacionNumero(nombre2))
@@ -261,14 +262,13 @@ public class Main {
            }while(continuar5);
        }
     }
-
+   //Funcion para verificar que no sea un espacio lo que se rellene en el string.
    public static boolean verificacion(String verificar){
-
         if(verificar.length()==0||verificar==null|| verificar.replaceAll("\\s+","").length()==0)
        return true;
                 return false;
    }
-
+   //Funcion para verificar que no sean solo numeros en un nombre.
    public static boolean verificacionNumero(String VerNum){
            char[] letras = VerNum.toCharArray();
            for(char v : letras){
@@ -277,7 +277,7 @@ public class Main {
        }
            return false;
    }
-
+   //Funcion para verificar que un nombre no contenga menos de dos letras ya que no hay nombres con 1 o 2 letras.
    public static boolean verificacionFormato(String VerFor){
        if (VerFor.length()<=2 && VerFor.length()>0)
            return true;
